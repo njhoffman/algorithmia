@@ -1,0 +1,17 @@
+in place merge sort & heap sort with linear time heap building
+breadth first traversals of graphs and trees
+dijkstra's algorithm w/fibonacci heap
+kruskal's algorithm w/union find by rank
+deterministic quick select
+polymorphic type inference
+2d voronoi diagram generation
+2d convex hull generation
+knapsack & related dp problems
+ford-fulkerson algorithm for max flow
+
+https://www.quora.com/Which-are-the-10-algorithms-every-computer-science-student-must-implement-at-least-once-in-life/answers/1867566
+searching and sorting: quicksort, merge sort, heapsort, bubble sort, insertion sort, radix sort, topological sort, breadth/depth first search, binary search
+dynamic programming: longest common subsequence, knapsack, travelling salesman problem
+graph: dijkstra, prim, kruskal, bellman-ford
+
+
