@@ -9,30 +9,37 @@
 
 #define _GNU_SOURCE
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
-void quicksort(int *arr, int low, int high);
+#define bufSize 1024
+
+void quicksort(long *arr, int first, int last);
 
 int main()
 {
-    FILE *numbersFile;
+    FILE* numbersFile;
     // TODO: convert into dynamic array (malloc)
     // http://www.mathcs.emory.edu/~cheung/Courses/255/Syllabus/2-C-adv-data/dyn-array.html
-    int numbersArray[10000];
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+    long numbersArray[100005];
+    char line[bufSize];
     numbersFile = fopen("../data-structures/numbers-10000.txt", "r");
     if (numbersFile == NULL) {
         exit(EXIT_FAILURE);
     }
 
     int n = 0;
-    while ( (read = getline(&line, &len, numbersFile)) != -1) {
+    while (fgets(line, sizeof(line) - 1, numbersFile) != NULL ) {
         // int atoi((const char * str)), stdlib.h
-        numbersArray[n] = atoi(line);
-        n++;
+         numbersArray[n] = atol(line);
+         n++;
     }
+    printf("made it here");
+    if (ferror(numbersFile)) {
+        fprintf(stderr, "Oops, error reading file\n");
+        abort();
+    }
+    fclose(numbersFile);
 
     quicksort(numbersArray, 0, n - 1);
 
@@ -40,24 +47,23 @@ int main()
     for (i = 0; i < n - 1; i++) {
         printf("%d", numbersArray[i]);
     }
-    fclose(numbersFile);
     exit(EXIT_SUCCESS);
 }
 
-void quicksort(int *arr, int low, int high)
+void quicksort(long *arr, int first, int last)
 {
-    int pivot, i, j, temp;
-    if (low < high) {
-        pivot = low;
-        i = low;
-        j = high;
+    long pivot, i, j, temp;
+    if (first < last) {
+        pivot = first;
+        i = first;
+        j = last;
         while (i < j) {
             // increment i until you get a number greater than the pivot element
-            while (arr[i] < arr[pivot] && i <= high) {
+            while (arr[i] <= arr[pivot] && i <= last) {
                 i++;
             }
             // decrement j until you get a number less than the pivot element
-            while (arr[j] > arr[pivot] && j >= low) {
+            while (arr[j] > arr[pivot] && j >= first) {
                 j--;
             }
             // swap elements in locations if i < j
@@ -78,6 +84,6 @@ void quicksort(int *arr, int low, int high)
     arr[pivot] = temp;
 
     // repeat quicksort for the two sub-arrays, one to the le4ft of j and one to the right of j
-    quicksort(arr, low, j - 1);
-    quicksort(arr, j + 1, high);
+    quicksort(arr, first, j - 1);
+    quicksort(arr, j + 1, last);
 }
