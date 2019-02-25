@@ -1,7 +1,4 @@
-const _ = require('lodash');
-const path = require('path');
 const chalk = require('chalk');
-const fs = require('fs');
 
 const humanMemorySize = (b, si = true) => {
   let bytes = Number(b);
@@ -34,9 +31,8 @@ const padRight = (input, len) => {
     : str;
 };
 
-// ⁰¹²³⁴⁵⁶⁷⁸⁹ ×
 const scientificNotation = (num) => num.toExponential()
-  .replace(/e\+?/, ' × 10^')
+  .replace(/e\+?/, '×10^')
   .replace(/(?:10\^)(\d)+$/g, (match, exp) => {
     switch (`${exp}`) {
       case '0': return '⁰';
@@ -52,10 +48,10 @@ const scientificNotation = (num) => num.toExponential()
       default: return '';
     }
   })
-  .replace(/× /, '×10')
-  .replace(/^(\d) ×/, '$1.00 ×')
-  .replace(/\.(\d) ×/, '.$10 ×')
-  .replace(/\.(\d\d)(?:\d+) ×/, '.$1 ×');
+  .replace(/×/, '×10')
+  .replace(/^(\d)×/, '$1.00×')
+  .replace(/\.(\d)×/, '.$10×')
+  .replace(/\.(\d\d)(?:\d+)×/, '.$1×');
 
 const padZeros = (num, numZeros) => (Array(numZeros).join('0') + num).slice(-numZeros);
 
@@ -77,31 +73,32 @@ const memLog = ({ n, startTime, startMemory }) => {
   } = startMemory;
 
   const hms = humanMemorySize;
+
+  // TODO: make fmtDiffByLine
+  const fmtDiff = (a, b, padding) => {
+    if (a >= b) {
+      return chalk.green(padRight(`+${hms(a - b)}`, padding));
+    }
+    return chalk.red(padRight(`${hms(a - b)}`, padding));
+  };
+
   const elapsed = ((new Date().getTime() - startTime) / 1000).toFixed(2);
   console.log([
     padRight(`${scientificNotation(n)}`, 10),
     padRight(`${elapsed}s`, 8),
     'heap:',
     chalk.bold(`${hms(hu)}`),
-    chalk.green(padRight(`+${hms(hu - startHu)}`, 10)),
+    fmtDiff(hu, startHu, 12),
     'total:',
     `${hms(ht)}`,
-    chalk.green(padRight(`+${hms(ht - startHt)}`, 10)),
+    fmtDiff(ht, startHt, 12),
     'rss:',
     `${hms(rss)}`,
-    chalk.green(padRight(`+${hms(rss - startRss)}`, 10)),
+    fmtDiff(rss, startRss, 12),
     'external:',
     `${hms(external)}`,
-    chalk.green(padRight(`+${hms(external - startExternal)}`, 10))
+    fmtDiff(external, startExternal, 12),
   ].join(' '));
-};
-
-const loadNumbers = (fileName) => {
-  const data = fs.readFileSync(
-    path.join(__dirname, '..', 'data', `${fileName}.txt`),
-    { encoding: 'utf-8' }
-  );
-  return _.map(`${data}`.split('\n'), _.toNumber);
 };
 
 /* eslint-disable no-param-reassign */
@@ -114,30 +111,19 @@ const swap = (arr, a, b) => {
 
 const increment = (config) => {
   config.n += 1;
-
-  const { n, startTime, logInterval } = config;
-
+  const { n, logInterval } = config;
   if (n % logInterval === 0) {
     memLog(config);
   }
 };
 
-const init = ({ logInterval }) => ({
-  logInterval,
-  n: 0,
-  startMemory: process.memoryUsage(),
-  startTime: new Date().getTime()
-});
-/* eslint-enable no-param-reassign */
 
 module.exports = {
   humanMemorySize,
   scientificNotation,
   memLog,
-  loadNumbers,
   swap,
   increment,
-  init,
   padLeft,
   padRight,
   padZeros,
