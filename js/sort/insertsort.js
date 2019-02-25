@@ -17,7 +17,7 @@ const { insertSortBasic } = require('./insertsort.funcs');
 const insertSortDefs = {
   basic: {
     func: insertSortBasic,
-    name: 'Insertion Sort',
+    name: 'Insert Sort',
     fileName: 'listNumbers',
     bigO: {
       best: [

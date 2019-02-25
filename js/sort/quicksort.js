@@ -2,7 +2,7 @@
  * Quicksort
  *  --best    : O(n log(n))
  *  --average : O(n log(n))
- *  --worst   : O(n^2)
+ *  --worst   : O(n²)
  *  --space   : O(n log(n))
  *
  * divide and conquer: split large array into smaller sub-arrays (low and high elements)
@@ -15,7 +15,7 @@ const { quickSortBasic } = require('./quicksort.funcs');
 const quickSortDefs = {
   basic: {
     func: quickSortBasic,
-    name: 'QuickSort Basic',
+    name: 'Quick Basic',
     fileName: 'listNumbers',
     bigO: {
       best: [
@@ -27,7 +27,7 @@ const quickSortDefs = {
         n => n * Math.log(n)
       ],
       worst: [
-        'log(n)',
+        'n²',
         n => n * Math.log(n)
       ]
     }

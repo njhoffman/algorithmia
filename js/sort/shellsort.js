@@ -1,7 +1,7 @@
 
 /*
  * Shell Sort
- *  --best    : O(n)
+ *  --best    : O(n log(n))
  *  --average : O(n²)
  *  --worst   : O(n²)
  *  --space   : O(1)
@@ -18,7 +18,7 @@ const shellSortDefs = {
     fileName: 'listNumbers',
     bigO: {
       best: [
-        'n',
+        'log n',
         n => n
       ],
       average: [

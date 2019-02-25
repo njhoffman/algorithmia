@@ -16,7 +16,7 @@ const { heapSortBasic } = require('./heapsort.funcs');
 const heapSortDefs = {
   basic: {
     func: heapSortBasic,
-    name: 'Heapsort Basic',
+    name: 'Heap Basic',
     fileName: 'listNumbers',
     bigO: {
       best: [

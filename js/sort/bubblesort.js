@@ -16,7 +16,7 @@ const { bubbleSortBasic } = require('./bubblesort.funcs');
 const bubbleSortDefs = {
   basic: {
     func: bubbleSortBasic,
-    name: 'BubbleSort Basic',
+    name: 'Bubble Basic',
     fileName: 'listNumbers',
     bigO: {
       best: [

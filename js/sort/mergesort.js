@@ -16,7 +16,7 @@ const { mergeSortTopDown, mergeSortBottomUp } = require('./mergesort.funcs');
 const mergeSortDefs = {
   topDown: {
     func: mergeSortTopDown,
-    name: 'MergeSort TopDown',
+    name: 'Merge TopDown',
     fileName: 'listNumbers',
     bigO: {
       best: [
@@ -35,7 +35,7 @@ const mergeSortDefs = {
   },
   bottomUp: {
     func: mergeSortBottomUp,
-    name: 'MergeSort BottomUp',
+    name: 'Merge BottomUp',
     fileName: 'listNumbers',
     bigO: {
       best: [

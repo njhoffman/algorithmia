@@ -1,7 +1,7 @@
 
 /*
  * Select Sort
- *  --best    : O(n)
+ *  --best    : O(n²)
  *  --average : O(n²)
  *  --worst   : O(n²)
  *  --space   : O(1)
