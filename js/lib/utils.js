@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const windowSize = require('window-size');
 
 const humanMemorySize = (b, si = true) => {
   let bytes = Number(b);
@@ -67,9 +68,9 @@ const padZeros = (num, numZeros) => (Array(numZeros).join('0') + num).slice(-num
 const numCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const memLog = ({ n, startTime, startMemory }) => {
-  const { heapUsed: hu, heapTotal: ht, rss, external } = process.memoryUsage();
+  const { heapUsed: hu, heapTotal: ht, rss } = process.memoryUsage();
 
-  const { heapUsed: startHu, heapTotal: startHt, rss: startRss, external: startExternal } = startMemory;
+  const { heapUsed: startHu, heapTotal: startHt, rss: startRss } = startMemory;
 
   const hms = humanMemorySize;
 
@@ -82,24 +83,22 @@ const memLog = ({ n, startTime, startMemory }) => {
   };
 
   const elapsed = ((new Date().getTime() - startTime) / 1000).toFixed(2);
-  console.log(
-    [
-      padRight(`${scientificNotation(n)}`, 10),
-      padRight(`${elapsed}s`, 8),
-      'heap:',
-      chalk.bold(`${hms(hu)}`),
-      fmtDiff(hu, startHu, 12),
-      'total:',
-      `${hms(ht)}`,
-      fmtDiff(ht, startHt, 12),
-      'rss:',
-      `${hms(rss)}`,
-      fmtDiff(rss, startRss, 12),
-      'external:',
-      `${hms(external)}`,
-      fmtDiff(external, startExternal, 12),
-    ].join(' '),
-  );
+  const output = [
+    padRight(`${scientificNotation(n)}`, 10),
+    padRight(`${elapsed}s`, 8),
+    'heap:',
+    chalk.bold(`${hms(hu)}`),
+    fmtDiff(hu, startHu, 12),
+    'total:',
+    `${hms(ht)}`,
+    fmtDiff(ht, startHt, 12),
+  ];
+
+  if (windowSize.width >= 120) {
+    output.concat(['rss:', `${hms(rss)}`, fmtDiff(rss, startRss, 12)]);
+  }
+
+  console.log(output.join(' '));
 };
 
 /* eslint-disable no-param-reassign */

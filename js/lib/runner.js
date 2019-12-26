@@ -7,7 +7,8 @@ const columnify = require('columnify');
 const { humanMemorySize, scientificNotation, numCommas, memLog } = require('./utils');
 
 const init = ({ fileName, logInterval, count = 1000, ...extra }) => {
-  const fileData = fs.readFileSync(path.join(__dirname, '..', 'data', `${fileName}.txt`), { encoding: 'utf-8' });
+  const filePath = path.join(__dirname, '../..', 'data', `${fileName}.txt`);
+  const fileData = fs.readFileSync(filePath, { encoding: 'utf-8' });
 
   const data = _.map(`${fileData}`.split('\n').slice(0, count), _.toNumber);
 
@@ -44,7 +45,7 @@ const runSets = (settings) => {
       'O(n) Worst': fmtBigO(worst[0], worst[1](count)),
     };
 
-    console.log('\n----------------------------------------\n', `Running ${name} on ${fmt(data)} items\n`);
+    console.log('----------------------------------------\n', `Running ${name} on ${fmt(data)} items\n`);
     const results = func(data.slice(), config);
     memLog(config);
 
@@ -55,7 +56,6 @@ const runSets = (settings) => {
       count: numCommas(count),
       time: new Date().getTime() - startTime,
       memory: humanMemorySize(endMemory.heapUsed),
-      // memory:        humanMemorySize(startMemory.heapUsed - endMemory.heapUsed),
       'O(n)': scientificNotation(config.n),
       ...bigOTotal,
     });
@@ -64,21 +64,21 @@ const runSets = (settings) => {
   });
 
   const columnifyOptions = {
-    minWidth: 15,
+    minWidth: 12,
     config: {
       // headingTransform / dataTransform
       name: {
-        minWidth: 20,
+        // minWidth: 20,
       },
       count: {
-        minWidth: 12,
+        // minWidth: 12,
       },
       time: {
-        minWidth: 8,
+        // minWidth: 8,
         dataTransform: (time) => `${(time / 1000).toFixed(2)}s`,
       },
       memory: {
-        minWidth: 10,
+        // minWidth: 10,
       },
       'O(n)': {
         minWidth: 12,
@@ -93,6 +93,7 @@ const runSets = (settings) => {
         minWidth: 20,
       },
     },
+    maxLineWidth: 'auto',
   };
 
   console.log('\n', columnify(totals, columnifyOptions), '\n\n');

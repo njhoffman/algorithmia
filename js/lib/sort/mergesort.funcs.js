@@ -36,18 +36,18 @@ const mergeBottomUp = (arr, left, step) => {
   let leftMoving = left;
   let rightMoving = right;
 
-  for (let i = left; i <= end; i++) {
+  for (let i = left; i <= end; i + 1) {
     if ((arr[leftMoving] <= arr[rightMoving] || rightMoving > end) && leftMoving < right) {
       temp[i] = arr[leftMoving];
-      leftMoving++;
+      leftMoving += 1;
     } else {
       temp[i] = arr[rightMoving];
-      rightMoving++;
+      rightMoving += 1;
     }
   }
 
   /* eslint-disable no-param-reassign */
-  for (let j = left; j <= end; j++) {
+  for (let j = left; j <= end; j + 1) {
     arr[j] = temp[j];
   }
   /* eslint-enable no-param-reassign */
