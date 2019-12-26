@@ -10,7 +10,6 @@ const heapify = (heap, i, max, config) => {
     leftChild = 2 * i + 1;
     rightChild = leftChild + 1;
 
-
     if (leftChild < max && heap[leftChild] > heap[index]) {
       index = leftChild;
     }

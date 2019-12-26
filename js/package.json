@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "esw lib --color",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:watch": "npm run lint -- --watch --clear",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

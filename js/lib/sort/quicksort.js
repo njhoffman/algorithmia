@@ -7,7 +7,7 @@
  *
  * divide and conquer: split large array into smaller sub-arrays (low and high elements)
  * recursively sort the sub-arrays by splitting into smaller sub-arrays
-*/
+ */
 
 const { runSets } = require('../runner');
 const { quickSortBasic } = require('./quicksort.funcs');
@@ -18,34 +18,29 @@ const quickSortDefs = {
     name: 'Quick Basic',
     fileName: 'listNumbers',
     bigO: {
-      best: [
-        'log(n)',
-        n => n * Math.log(n)
-      ],
-      average: [
-        'log(n)',
-        n => n * Math.log(n)
-      ],
-      worst: [
-        'n²',
-        n => n * Math.log(n)
-      ]
-    }
-  }
+      best: ['log(n)', (n) => n * Math.log(n)],
+      average: ['log(n)', (n) => n * Math.log(n)],
+      worst: ['n²', (n) => n * Math.log(n)],
+    },
+  },
 };
 
 const settings = {
   logInterval: 3 * 1000 * 1000,
-  runs: [{
-    ...quickSortDefs.basic,
-    count: 100000
-  }, {
-    ...quickSortDefs.basic,
-    count: 1000000
-  }, {
-    ...quickSortDefs.basic,
-    count: 3000000
-  }]
+  runs: [
+    {
+      ...quickSortDefs.basic,
+      count: 100000,
+    },
+    {
+      ...quickSortDefs.basic,
+      count: 1000000,
+    },
+    {
+      ...quickSortDefs.basic,
+      count: 3000000,
+    },
+  ],
 };
 
 // invoked directly from command line

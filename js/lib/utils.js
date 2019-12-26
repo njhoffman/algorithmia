@@ -19,58 +19,57 @@ const humanMemorySize = (b, si = true) => {
 
 const padLeft = (input, len) => {
   const str = input && input.toString() ? input.toString() : '';
-  return len > str.length
-    ? (new Array(len - str.length + 1)).join(' ') + str
-    : str;
+  return len > str.length ? new Array(len - str.length + 1).join(' ') + str : str;
 };
 
 const padRight = (input, len) => {
   const str = input && input.toString() ? input.toString() : '';
-  return len > str.length
-    ? str + (new Array(len - str.length + 1)).join(' ')
-    : str;
+  return len > str.length ? str + new Array(len - str.length + 1).join(' ') : str;
 };
 
-const scientificNotation = (num) => num.toExponential()
-  .replace(/e\+?/, '×10^')
-  .replace(/(?:10\^)(\d)+$/g, (match, exp) => {
-    switch (`${exp}`) {
-      case '0': return '⁰';
-      case '1': return '¹';
-      case '2': return '²';
-      case '3': return '³';
-      case '4': return '⁴';
-      case '5': return '⁵';
-      case '6': return '⁶';
-      case '7': return '⁷';
-      case '8': return '⁸';
-      case '9': return '⁹';
-      default: return '';
-    }
-  })
-  .replace(/×/, '×10')
-  .replace(/^(\d)×/, '$1.00×')
-  .replace(/\.(\d)×/, '.$10×')
-  .replace(/\.(\d\d)(?:\d+)×/, '.$1×');
+const scientificNotation = (num) =>
+  num
+    .toExponential()
+    .replace(/e\+?/, '×10^')
+    .replace(/(?:10\^)(\d)+$/g, (match, exp) => {
+      switch (`${exp}`) {
+        case '0':
+          return '⁰';
+        case '1':
+          return '¹';
+        case '2':
+          return '²';
+        case '3':
+          return '³';
+        case '4':
+          return '⁴';
+        case '5':
+          return '⁵';
+        case '6':
+          return '⁶';
+        case '7':
+          return '⁷';
+        case '8':
+          return '⁸';
+        case '9':
+          return '⁹';
+        default:
+          return '';
+      }
+    })
+    .replace(/×/, '×10')
+    .replace(/^(\d)×/, '$1.00×')
+    .replace(/\.(\d)×/, '.$10×')
+    .replace(/\.(\d\d)(?:\d+)×/, '.$1×');
 
 const padZeros = (num, numZeros) => (Array(numZeros).join('0') + num).slice(-numZeros);
 
 const numCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const memLog = ({ n, startTime, startMemory }) => {
-  const {
-    heapUsed: hu,
-    heapTotal: ht,
-    rss,
-    external
-  } = process.memoryUsage();
+  const { heapUsed: hu, heapTotal: ht, rss, external } = process.memoryUsage();
 
-  const {
-    heapUsed: startHu,
-    heapTotal: startHt,
-    rss: startRss,
-    external: startExternal
-  } = startMemory;
+  const { heapUsed: startHu, heapTotal: startHt, rss: startRss, external: startExternal } = startMemory;
 
   const hms = humanMemorySize;
 
@@ -83,22 +82,24 @@ const memLog = ({ n, startTime, startMemory }) => {
   };
 
   const elapsed = ((new Date().getTime() - startTime) / 1000).toFixed(2);
-  console.log([
-    padRight(`${scientificNotation(n)}`, 10),
-    padRight(`${elapsed}s`, 8),
-    'heap:',
-    chalk.bold(`${hms(hu)}`),
-    fmtDiff(hu, startHu, 12),
-    'total:',
-    `${hms(ht)}`,
-    fmtDiff(ht, startHt, 12),
-    'rss:',
-    `${hms(rss)}`,
-    fmtDiff(rss, startRss, 12),
-    'external:',
-    `${hms(external)}`,
-    fmtDiff(external, startExternal, 12),
-  ].join(' '));
+  console.log(
+    [
+      padRight(`${scientificNotation(n)}`, 10),
+      padRight(`${elapsed}s`, 8),
+      'heap:',
+      chalk.bold(`${hms(hu)}`),
+      fmtDiff(hu, startHu, 12),
+      'total:',
+      `${hms(ht)}`,
+      fmtDiff(ht, startHt, 12),
+      'rss:',
+      `${hms(rss)}`,
+      fmtDiff(rss, startRss, 12),
+      'external:',
+      `${hms(external)}`,
+      fmtDiff(external, startExternal, 12),
+    ].join(' '),
+  );
 };
 
 /* eslint-disable no-param-reassign */
@@ -117,7 +118,6 @@ const increment = (config) => {
   }
 };
 
-
 module.exports = {
   humanMemorySize,
   scientificNotation,
@@ -127,5 +127,5 @@ module.exports = {
   padLeft,
   padRight,
   padZeros,
-  numCommas
+  numCommas,
 };

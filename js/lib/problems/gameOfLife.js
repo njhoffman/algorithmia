@@ -30,4 +30,4 @@
  *
  * I used a cartesian coordinate system with origin at top left. As I got into it I began to wish for a centered origin to allow the board to grow in a more balanced way without the top and left boundaries being more likely to be reached before the other two.
  * I’m using a brute-force “step” function to advance the board. I’d like to look into better algorithms like List Life or Hashlife.
-*/
+ */

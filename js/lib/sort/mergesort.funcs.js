@@ -23,11 +23,7 @@ const mergeSortTopDown = (arr, config) => {
   const left = arr.slice(0, middle);
   const right = arr.slice(middle);
 
-  return mergeTopDown(
-    mergeSortTopDown(left, config),
-    mergeSortTopDown(right, config),
-    config
-  );
+  return mergeTopDown(mergeSortTopDown(left, config), mergeSortTopDown(right, config), config);
 };
 
 /* bottom-up implementation */

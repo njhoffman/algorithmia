@@ -12,7 +12,7 @@
  *
  * implements an associative array abstract data type, a structure that can map keys to values
  * a hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found
-*/
+ */
 
 class HashMap {
   constructor() {
@@ -21,7 +21,7 @@ class HashMap {
 
   get(x) {
     let result;
-    this.list.forEach(pairs => {
+    this.list.forEach((pairs) => {
       if (pairs[0] === x) {
         result = pairs[1];
       }
