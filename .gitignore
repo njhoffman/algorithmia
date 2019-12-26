@@ -1,6 +1,7 @@
 .DS_STORE
 *.log
-data/
+data/*
+!data/.gitkeep
 
 .nyc_output/
 **/node_modules/
@@ -16,3 +17,4 @@ reports/plato/**
 .idea/
 
 package-lock.json
+
