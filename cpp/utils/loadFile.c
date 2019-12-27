@@ -4,15 +4,13 @@
 
 #define bufSize 1024
 
-long *loadFile(char *filePath, int numLines);
-
-long *loadFile(char *filePath, int numLines)
+long *loadFile(char *filePath, int count)
 {
   FILE *numbersFile;
-  long *numbersArray = malloc(numLines * sizeof(long));
+  long *numbersArray = malloc(count * sizeof(long));
   char line[bufSize];
 
-  printf("\nOpening %d lines: %s\n", numLines, filePath);
+  printf("\nOpening %d lines: %s\n", count, filePath);
   numbersFile = fopen(filePath, "r");
 
   if (numbersFile == NULL) {
@@ -26,7 +24,7 @@ long *loadFile(char *filePath, int numLines)
   }
 
   int n = 0;
-  while (fgets(line, sizeof(line) - 1, numbersFile) != NULL ) {
+  while (n < count && fgets(line, sizeof(line) - 1, numbersFile) != NULL) {
     // printf("\t%d: %s", n, line);
     numbersArray[n] = atol(line);
     // printf("\t%d: %ld\n", n, numbersArray[n]);
@@ -37,10 +35,8 @@ long *loadFile(char *filePath, int numLines)
   printf("\nPopulated %d numbers\n", n);
 
   int i;
-  for (i = 0; i < numLines; i++) {
+  for (i = 0; i < count; i++) {
     printf("\t%ld\n", numbersArray[i]);
   }
   return numbersArray;
 }
-
-
