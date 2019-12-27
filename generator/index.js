@@ -3,12 +3,12 @@ const _ = require('lodash');
 const chalk = require('chalk');
 // const faker = require('faker');
 
-const num = 5000000;
-const outFile = '../data/listNumbers.txt';
+const num = 10000;
+const outFile = '../data/listNumbers-10000.txt';
 
 const generateRandomNumber = () => _.random(0, num * 10);
 
-const numCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const numCommas = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 console.log(chalk.bold('\n\n**Data Generator**\n\n'));
 

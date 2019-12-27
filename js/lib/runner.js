@@ -53,7 +53,8 @@ const runSets = (settings) => {
 
     totals.push({
       name,
-      count: numCommas(count),
+      // count: numCommas(count),
+      count: scientificNotation(count),
       time: new Date().getTime() - startTime,
       memory: humanMemorySize(endMemory.heapUsed),
       'O(n)': scientificNotation(config.n),
@@ -68,7 +69,7 @@ const runSets = (settings) => {
     config: {
       // headingTransform / dataTransform
       name: {
-        // minWidth: 20,
+        minWidth: 15,
       },
       count: {
         // minWidth: 12,
@@ -86,7 +87,7 @@ const runSets = (settings) => {
       'O(n) Best': {
         minWidth: 20,
       },
-      'O(n) Average': {
+      'O(n) Avg': {
         minWidth: 20,
       },
       'O(n) Worst': {

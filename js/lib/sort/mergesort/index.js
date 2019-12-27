@@ -9,8 +9,9 @@
  * recursively merge sublists to produce new sorted sublist until 1 remaining
  */
 
-const { runSets } = require('../runner');
-const { mergeSortTopDown, mergeSortBottomUp } = require('./mergesort.funcs');
+const { runSets } = require('../../runner');
+const mergeSortTopDown = require('./mergesort.topdown');
+const mergeSortBottomUp = require('./mergesort.bottomup');
 
 const mergeSortDefs = {
   topDown: {
@@ -50,6 +51,18 @@ const settings = {
       ...mergeSortDefs.topDown,
       count: 500000,
     },
+    // {
+    //   ...mergeSortDefs.bottomUp,
+    //   count: 100000,
+    // },
+    // {
+    //   ...mergeSortDefs.bottomUp,
+    //   count: 200000,
+    // },
+    // {
+    //   ...mergeSortDefs.bottomUp,
+    //   count: 500000,
+    // },
   ],
 };
 
