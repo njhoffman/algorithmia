@@ -1,51 +1,31 @@
-/*
- * Quicksort
- *  --best    : O(n log(n))
- *  --average : O(n log(n))
- *  --worst   : O(n²)
- *  --space   : O(n log(n))
- *
- * divide and conquer: split large array into smaller sub-arrays (low and high elements)
- * recursively sort the sub-arrays by splitting into smaller sub-arrays
- */
+const { increment } = require('../../utils/utils');
 
-const { runSets } = require('../runner');
-const { quickSortBasic } = require('./quicksort.funcs');
+const quickSort = (arr, config) => {
+  if (config.verbose > 2) {
+    console.log(`Sort  (n: ${config.n})`, arr);
+  }
 
-const quickSortDefs = {
-  basic: {
-    func: quickSortBasic,
-    name: 'Quick Basic',
-    fileName: 'listNumbers',
-    bigO: {
-      best: ['log(n)', (n) => n * Math.log(n)],
-      average: ['log(n)', (n) => n * Math.log(n)],
-      worst: ['n²', (n) => n * Math.log(n)],
-    },
-  },
+  if (arr.length < 2) {
+    increment(config);
+    return arr;
+  }
+
+  const pivot = arr[0];
+  const lesser = [];
+  const greater = [];
+
+  for (let i = 1; i < arr.length; i += 1) {
+    increment(config);
+    if (arr[i] < pivot) {
+      lesser.push(arr[i]);
+    } else {
+      greater.push(arr[i]);
+    }
+  }
+
+  const sortedLesser = quickSort(lesser, config);
+  const sortedGreater = quickSort(greater, config);
+  return sortedLesser.concat(pivot, sortedGreater);
 };
 
-const settings = {
-  logInterval: 3 * 1000 * 1000,
-  runs: [
-    {
-      ...quickSortDefs.basic,
-      count: 100000,
-    },
-    {
-      ...quickSortDefs.basic,
-      count: 1000000,
-    },
-    {
-      ...quickSortDefs.basic,
-      count: 3000000,
-    },
-  ],
-};
-
-// invoked directly from command line
-if (require.main === module) {
-  runSets(settings);
-}
-
-module.exports = { quickSortDefs };
+module.exports = quickSort;

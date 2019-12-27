@@ -10,8 +10,8 @@
  *
  */
 
-const { runSets } = require('../runner');
-const { bubbleSortBasic } = require('./bubblesort.funcs');
+const { runSets } = require('../../runner');
+const bubbleSortBasic = require('./bubblesort.basic');
 
 const bubbleSortDefs = {
   basic: {
@@ -19,11 +19,21 @@ const bubbleSortDefs = {
     name: 'Bubble Basic',
     fileName: 'listNumbers',
     bigO: {
-      best: ['n', (n) => n],
-      average: ['n²', (n) => n * n],
-      worst: ['n²', (n) => n * n],
+      best: ['n²', (n) => n ** 2],
+      average: ['n²', (n) => n ** 2],
+      worst: ['n²', (n) => n ** 2],
     },
   },
+  // optimized: {
+  //   func: bubbleSortOptimized,
+  //   name: 'Bubble Optimized',
+  //   fileName: 'listNumbers',
+  //   bigO: {
+  //     best: ['n', (n) => n],
+  //     average: ['n²', (n) => n ** 2],
+  //     worst: ['n²', (n) => n ** 2],
+  //   },
+  // },
 };
 
 const settings = {

@@ -61,8 +61,7 @@ void quicksort(long *arr, int first, int last)
       }
     }
 
-    // when i >= j it means the j-th position is the correct position of the pivot element
-    // hence swap the pivot element with the elmenet in the j-th position
+    // swap the pivot element with the elmenet in the j-th position
     temp = arr[pivot];
     arr[pivot] = arr[j];
     arr[j] = temp;
