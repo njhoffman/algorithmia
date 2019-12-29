@@ -29,3 +29,10 @@ const quickSort = (arr, config) => {
 };
 
 module.exports = quickSort;
+
+module.exports.definition = {
+  oWorst: (n) => n ** 2,
+  oAvg: (n) => n * Math.log(n),
+  oBest: (n) => n * Math.log(n),
+  oSpace: (n) => Math.log(n),
+};

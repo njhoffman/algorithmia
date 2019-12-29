@@ -3,6 +3,9 @@
 data/*
 !data/.gitkeep
 
+
+.gdb_history
+
 .nyc_output/
 **/node_modules/
 rethinkdb_data/
