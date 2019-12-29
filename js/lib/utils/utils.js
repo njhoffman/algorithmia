@@ -1,3 +1,7 @@
+const _ = require('lodash');
+const { resolve } = require('path');
+const { readdir } = require('fs').promises;
+
 const { memLog } = require('./memory');
 
 /* eslint-disable no-param-reassign */
@@ -16,8 +20,30 @@ const increment = (config) => {
   }
 };
 
+const strToBool = (string) => {
+  const areTrue = ['yes', 'true', true, 'y', 1, '1'];
+
+  if (_.indexOf(areTrue, string.toLowerCase()) > -1) {
+    return true;
+  }
+
+  return false;
+};
+
+const getFiles = async (dir) => {
+  const dirEntries = await readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(
+    dirEntries.map((dirEnt) => {
+      const path = resolve(dir, dirEnt.name);
+      return dirEnt.isDirectory() ? getFiles(path) : path;
+    }),
+  );
+  return Array.prototype.concat(...files);
+};
+
 module.exports = {
-  memLog,
+  getFiles,
+  strToBool,
   swap,
   increment,
 };

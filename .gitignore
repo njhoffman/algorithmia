@@ -11,6 +11,8 @@ rethinkdb_data/
 /_*
 /nodemon-*.json
 
+*.test.js
+
 reports/coverage/**
 reports/plato/**
 

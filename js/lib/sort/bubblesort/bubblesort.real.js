@@ -1,6 +1,9 @@
 const { increment, swap } = require('../../utils/utils');
 
-/* optimized (avoid some loops), O(n^2) average, O(n) best */
+/**
+ * real bubble sort (avoid loops if no swapping),
+ * O(n^2) worst, O(n^2) average, O(n) best, O(1) space
+ */
 
 const bubbleSort = (arr, config) => {
   const sorted = arr.slice();
@@ -20,3 +23,9 @@ const bubbleSort = (arr, config) => {
 };
 
 module.exports = bubbleSort;
+module.exports.definition = {
+  oWorst: (n) => n ** 2,
+  oAvg: (n) => n ** 2,
+  oBest: (n) => n * Math.log(n),
+  oSpace: (n) => n,
+};
