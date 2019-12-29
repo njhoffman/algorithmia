@@ -11,6 +11,7 @@ rethinkdb_data/
 /_*
 /nodemon-*.json
 
+.ccls-cache/
 *.test.js
 
 reports/coverage/**
