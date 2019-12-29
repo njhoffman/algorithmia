@@ -13,7 +13,7 @@ const bubbleSort = (arr, config) => {
     swapped = false;
     for (let i = 0; i < sorted.length; i += 1) {
       increment(config);
-      if (sorted[i] && sorted[i + 1] && sorted[i] > sorted[i + 1]) {
+      if (sorted[i] > sorted[i + 1]) {
         swap(sorted, i, i + 1);
         swapped = true;
       }

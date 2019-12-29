@@ -1,52 +1,26 @@
-/*
- * Insertion Sort
- *  --best    : O(n)
- *  --average : O(n²)
- *  --worst   : O(n²)
- *  --space   : O(1)
- *
- * insertion sort algorithm iterates, consuming one input element each repetition, and growing a sorted output list
- * each iteration removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain
- * similar to sorting cards
- */
+const { increment } = require('../../utils/utils');
 
-const { runSets } = require('../runner');
-const { insertSortBasic } = require('./insertsort.funcs');
-
-const insertSortDefs = {
-  basic: {
-    func: insertSortBasic,
-    name: 'Insert Sort',
-    fileName: 'listNumbers',
-    bigO: {
-      best: ['n', (n) => n],
-      average: ['n²', (n) => n * n],
-      worst: ['n²', (n) => n * n],
-    },
-  },
+const insertSort = (arr, config) => {
+  const sorted = arr.slice();
+  for (let i = 0; i < sorted.length; i += 1) {
+    increment(config);
+    const tmp = sorted[i];
+    let j = i - 1;
+    while (j >= 0 && sorted[j] > tmp) {
+      increment(config);
+      sorted[j + 1] = sorted[j];
+      j -= 1;
+    }
+    sorted[j + 1] = tmp;
+  }
+  return sorted;
 };
 
-const settings = {
-  logInterval: 3 * 1000 * 1000,
-  runs: [
-    {
-      ...insertSortDefs.basic,
-      count: 1000,
-    },
-    {
-      ...insertSortDefs.basic,
-      count: 2000,
-    },
-    {
-      ...insertSortDefs.basic,
-      count: 5000,
-    },
-  ],
+module.exports = insertSort;
+
+module.exports.definition = {
+  oWorst: (n) => n ** 2,
+  oAvg: (n) => n ** 2,
+  oBest: (n) => n,
+  oSpace: (n) => 1,
 };
-
-// invoked directly from command line
-if (require.main === module) {
-  runSets(settings);
-}
-
-module.exports = { insertSortDefs };

@@ -6,7 +6,8 @@ const { strToBool, getFiles } = require('../lib/utils/utils');
 const TEST_O = _.has(process.env, 'TEST_O') ? strToBool(process.env.TEST_O) : true;
 
 // generate number arrays with this sequence of element count
-const sequences = [20, 30, 50, 100];
+const sequences = [100];
+const verbosity = 1;
 
 before(async () => {
   const testFiles = [];
@@ -17,6 +18,7 @@ before(async () => {
   testFiles.forEach((filePath) => {
     const fileName = filePath.split('/').pop();
     const origPath = filePath.replace('.test', '');
+
     /* eslint-disable global-require, import/no-dynamic-require */
     const testMod = require(filePath);
     const origMod = require(origPath);
@@ -58,6 +60,11 @@ before(async () => {
             expect(origResult)
               .to.be.an('array')
               .with.length(seq);
+
+            if (verbosity > 0) {
+              console.log(origResult, testResult);
+            }
+
             expect(testResult).to.deep.equal(origResult);
           });
 
