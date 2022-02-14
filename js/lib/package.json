@@ -1,14 +1,9 @@
 {
-  "name": "js",
+  "name": "flamegraph",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "lint": "esw lib --color",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:watch": "npm run lint -- --watch --clear",
-    "test": "NODE_ENV=test mocha",
-    "test:watch": "npm run test -- --watch --reporter spec"
+    "start": "node --perf-basic-prof-only-functions ./app.js"
   },
   "author": "",
   "license": "ISC",
@@ -30,15 +25,7 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "benchmark": "^2.1.4",
-    "chalk": "3.0.0",
-    "columnify": "1.5.4",
-    "express": "^4.17.2",
-    "fast-levenshtein": "^3.0.0",
-    "lodash": "4.17.15",
-    "microtime": "^3.0.0",
-    "mongodb": "^4.3.1",
-    "simples": "^0.8.8",
-    "window-size": "1.1.1"
+    "express": "^4.14.1",
+    "fast-levenshtein": "^2.0.6"
   }
 }

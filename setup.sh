@@ -3,6 +3,9 @@
 BASEDIR="/tmp/algorithmia"
 CWD=$(dirname "${BASH_SOURCE[0]}")
 
+# https://github.com/khan4019/front-end-Interview-Questions
+# https://www.alxolr.com/articles/squeeze-node-js-performance-with-flame-graphs#flame-graphs
+
 function usage {
   echo "usage"
 }

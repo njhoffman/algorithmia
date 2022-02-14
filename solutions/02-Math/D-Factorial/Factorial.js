@@ -17,7 +17,7 @@ const factorial = (num) => {
   for (i = 1; i < num; i++) {
     fact *= i;
   }
-  return fact
+  return fact;
 }
 
 const factorialRecursive = (num) => {

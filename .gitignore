@@ -1,5 +1,6 @@
 .DS_STORE
 *.log
+*.data
 data/*
 !data/.gitkeep
 
@@ -23,4 +24,3 @@ reports/plato/**
 .idea/
 
 package-lock.json
-
