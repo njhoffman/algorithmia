@@ -1,0 +1,1 @@
+Reverse all of the words entered into stdin.

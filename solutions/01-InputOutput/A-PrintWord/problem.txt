@@ -1,0 +1,1 @@
+Print to stdout any word that is entered into stdin.

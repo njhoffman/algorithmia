@@ -1,0 +1,1 @@
+Reverse all of the chararacters that are input to stdin.

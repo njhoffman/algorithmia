@@ -30,9 +30,11 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
+    "benchmark": "^2.1.4",
     "chalk": "3.0.0",
     "columnify": "1.5.4",
     "lodash": "4.17.15",
+    "microtime": "^3.0.0",
     "window-size": "1.1.1"
   }
 }

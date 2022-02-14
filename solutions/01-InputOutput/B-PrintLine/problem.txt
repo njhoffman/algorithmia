@@ -1,0 +1,1 @@
+Print to stdout a whole line that is entered into stdin.

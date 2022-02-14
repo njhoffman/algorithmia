@@ -1,0 +1,1 @@
+Print out the modoulus of all numbers entered into stdin.

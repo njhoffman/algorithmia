@@ -1,0 +1,9 @@
+Given a number entered N print the index value of the Fibonacci sequence, where the sequence is:
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+
+Variations:
+- while loop: O(n)
+- recursive function: O(n^2)
+- memoized function: O(n)
+
+(TODO: make fibonacci sequence task)

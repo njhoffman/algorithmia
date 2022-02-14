@@ -1,0 +1,1 @@
+Print to stdout an entire paragraph that is entered into stdin.
