@@ -1,0 +1,7 @@
+{
+  "name": "sorting",
+  "items": [
+    "03-Sorting/BubbleSort",
+    "03-Sorting/SelectionSort"
+  ]
+}

@@ -1,0 +1,11 @@
+Sorting with selection sort algorithm
+
+  Best: n^2   Average: n^2   Worst: n^2   Space: 1
+
+  hint: select the lowest element and swap left
+
+85 35 48 69 12 38 27 9 92 14 26
+9 12 14 26 27 35 38 48 69 85 92
+
+86 67 56 61 12 99 31 79 39 3 62
+3 12 31 39 56 61 62 67 79 86 99

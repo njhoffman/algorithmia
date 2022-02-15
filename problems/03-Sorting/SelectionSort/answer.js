@@ -5,7 +5,6 @@ const rl = readline.createInterface({
   terminal: false
 })
 
-
 const selectionSort = (arr) => {
   let minIdx, temp, len = arr.length;
   for (let i = 0; i < len; i++) {
@@ -21,6 +20,8 @@ const selectionSort = (arr) => {
   }
   return arr;
 }
+
+module.exports = selectionSort
 
 rl.on('line', (line) => {
   const numbers = line.split(' ').map(num => parseInt(num))

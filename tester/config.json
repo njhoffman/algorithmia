@@ -1,0 +1,11 @@
+{
+  "debug": true,
+  "cleanFiles": true,
+  "baseDir": "../problems/",
+  "dbFile": "algorithmia.sqlite",
+  "dirPrefix": "algorithmia-",
+  "build": {
+    "js": "node",
+    "go": "go run"
+  }
+}
