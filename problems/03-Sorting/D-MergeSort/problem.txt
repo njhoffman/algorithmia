@@ -1,0 +1,1 @@
+Best: n log n   Average: n log n   Worst: n log n
