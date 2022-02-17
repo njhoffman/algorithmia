@@ -63,9 +63,9 @@ const initFiles = (config, language, { items, name }) => {
     const destDir = `${tmpDir}/${i}-${destItem}`;
     copyProblem(srcDir, destDir, language)
     outputDirs.push({
-      dir:      destDir,
+      dir: destDir,
       category: destItem.split('_')[0],
-      name:     destItem.split('_')[1]
+      name: destItem.split('_')[1]
     });
   });
   // copy files without answer

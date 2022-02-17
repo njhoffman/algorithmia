@@ -1,0 +1,104 @@
+[
+  [
+    "What is the best running time of quick sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the average running time of quick sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the worst running time of quick sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the storage requirement of quick sort?",
+    "1"
+  ],
+  [
+    "What is the best running time of merge sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the average running time of merge sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the worst running time of merge sort?",
+    "n log n",
+    "log n"
+  ],
+  [
+    "What is the storage requirement of merge sort?",
+    "n"
+  ],
+  [
+    "What is the best running time of insertion sort?",
+    "n"
+  ],
+  [
+    "What is the average running time of insertion sort?",
+    "n^2"
+  ],
+  [
+    "What is the worst running time of insertion sort?",
+    "n^2"
+  ],
+  [
+    "What is the storage requirement of insertion sort?",
+    "1"
+  ],
+  [
+    "What is the best running time of quick sort?",
+    "n log n"
+  ],
+  [
+    "What is the average running time of quick sort?",
+    "n log n"
+  ],
+  [
+    "What is the worst running time of quick sort?",
+    "n^2"
+  ],
+  [
+    "What is the storage requirement of quick sort?",
+    "1"
+  ],
+  [
+    "What is the best running time of bubble sort?",
+    "n log n"
+  ],
+  [
+    "What is the average running time of bubble sort?",
+    "n log n"
+  ],
+  [
+    "What is the worst running time of bubble sort?",
+    "n^2"
+  ],
+  [
+    "What is the storage requirement of bubble sort?",
+    "1"
+  ],
+  [
+    "What is the best running time of heap sort?",
+    "n log n"
+  ],
+  [
+    "What is the average running time of heap sort?",
+    "n log n"
+  ],
+  [
+    "What is the worst running time of heap sort?",
+    "n^2"
+  ],
+  [
+    "What is the storage requirement of heap sort?",
+    "1"
+  ]
+]
