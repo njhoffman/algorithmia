@@ -4,7 +4,7 @@
 *.sqlite
 data/*
 !data/.gitkeep
-
+*.exe
 
 .gdb_history
 
