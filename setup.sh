@@ -4,12 +4,9 @@
 BASEDIR="/tmp/algorithmia"
 CWD=$(dirname "${BASH_SOURCE[0]}")
 
-NVIM_SERVER="${NVIM_SERVER:-pricus}"
-NVIM_SOCKET="$(fd "$NVIM_SERVER" /tmp | head -n1)"
+NVIM_SERVER="${NVIM_SERVER:-triton}"
+NVIM_SOCKET="$(ls /tmp/*"$NVIM_SERVER"* | head -n1)"
 EXT=""
-
-# https://github.com/khan4019/front-end-Interview-Questions
-# https://www.alxolr.com/articles/squeeze-node-js-performance-with-flame-graphs#flame-graphs
 
 function usage {
   echo "usage"
@@ -21,6 +18,7 @@ TESTS=()
 TIMES=()
 CURR=0
 CURR_GROUP=0
+
 function print_files() {
   #     ﱣ
   task_ok="\e[1;36m\e[0m"
@@ -34,27 +32,31 @@ function print_files() {
   for task in "${TASKS[@]}"; do
     if [[ $task == "group" ]]; then
       if [[ ${TIMES[$task_n]} == "" ]]; then
+        # current group or pending group
         if [[ $task_n -eq $CURR_GROUP ]]; then
-          line="  \e[1m${group_curr} ${NAMES[$task_n]}\e[0m"
-          line="$line    ${TESTS[$task_n]}"
+          line="  \e[1m${group_curr} ${NAMES[$task_n]}"
+          line="$line    ${TESTS[$task_n]}\e[0m"
         else
           line="  ${group_wait} ${NAMES[$task_n]}"
           line="$line    ${TESTS[$task_n]}"
         fi
       else
+        # completed group
         line="  ${group_ok} ${NAMES[$task_n]}"
         line="$line    ${TESTS[$task_n]}    ${TIMES[$task_n]}s"
       fi
     else
       if [[ ${TIMES[$task_n]} == "" ]]; then
+        # current task or pending task
         if [[ $task_n -eq $CURR ]]; then
-          line="    \e[34;1;3m${task_wait} ${NAMES[$task_n]}"
+          line="    \e[34;1m${task_wait} ${NAMES[$task_n]}"
           line="$line    ${TESTS[$task_n]}\e[0m"
         else
           line="    ${task_wait} ${NAMES[$task_n]}"
           line="$line    ${TESTS[$task_n]}"
         fi
       else
+        # completed task
         line="    ${task_ok} ${NAMES[$task_n]}"
         line="$line    \e[1;36m${TESTS[$task_n]}\e[0m    ${TIMES[$task_n]}s"
       fi
@@ -64,7 +66,64 @@ function print_files() {
   done
 }
 
+function watch_files {
+  task_n=0
+  # get current task and group
+  for task in "${TASKS[@]}"; do
+    if [[ ${TIMES[$task_n]} == "" ]]; then
+      if [[ $task == "group" ]]; then
+        CURR_GROUP=$task_n
+      else
+        CURR=$task_n
+        break
+      fi
+    fi
+    task_n=$((task_n + 1))
+  done
+
+  # load file in nvim and watch until tests pass
+  taskname=${TASKS[$CURR]##*-}
+  watch_file="${TASKS[$CURR]}/$taskname.$EXT"
+  start_time=$(date +%s)
+  echo -e "\nWatching: $watch_file"
+  if [[ -z $NVIM_SOCKET ]]; then
+    echo -e "Cannot find NVIM SOCKET for $NVIM_SERVER"
+  else
+    nvr --servername "$NVIM_SOCKET" --remote "$watch_file"
+  fi
+  print_files
+  while inotifywait -q -e close_write "$watch_file"; do
+    # TODO: figure out why spaces getting stripped
+    rm "${TASKS[$CURR]}/"*.out* 2> /dev/null
+    rm "$CWD/"*.exe 2> /dev/null
+    mapfile res < <(cpb test "$watch_file")
+    task_tests="${TESTS[$CURR]##*/}"
+    fail=$(echo -e "${res[@]}" | grep -c ':  W A')
+    success=$(echo -e "${res[@]}" | grep -c ':  A C')
+    group_success="${TESTS[$CURR_GROUP]%%/*}"
+    group_total="${TESTS[$CURR_GROUP]##*/}"
+    group_success=$((group_success + success))
+
+    # run for stdout and break when all tests pass
+    clear && FORCE_COLOR=3 cpb test "$watch_file"
+    if [[ $success == "$task_tests" ]]; then
+      TESTS[$CURR]="$success/$task_tests"
+      TIMES[$CURR]=$(($(date '+%s') - start_time))
+      TESTS[$CURR_GROUP]="$group_success/$group_total"
+      break
+    elif [[ $success -gt 0 || $fail -gt 0 ]]; then
+      TESTS[$CURR]="$success/$task_tests"
+      TESTS[$CURR_GROUP]="$group_success/$group_total"
+    fi
+    print_files
+  done
+
+  # recurse until we are through the tree
+  watch_files
+}
+
 function load_files {
+  # prepare file arrays
   basedir="$BASEDIR/$NVIM_SERVER"
   for groupdir in "$basedir/"*; do
     group_n=0
@@ -84,57 +143,10 @@ function load_files {
     done
     TESTS[tests_i]="0/"$group_n
   done
-  watch_files
-}
-
-function watch_files {
-  task_n=0
-  for task in "${TASKS[@]}"; do
-    if [[ ${TIMES[$task_n]} == "" ]]; then
-      if [[ $task == "group" ]]; then
-        CURR_GROUP=$task_n
-      else
-        CURR=$task_n
-        break
-      fi
-    fi
-    task_n=$((task_n + 1))
-  done
-  taskname=${TASKS[$CURR]##*-}
-  watch_file="${TASKS[$CURR]}/$taskname.$EXT"
-  start_time=$(date +%s)
-  print_files
-  echo -e "\nWatching: $watch_file"
-  while inotifywait -q -e close_write "$watch_file"; do
-    # TODO: figure out why spaces getting stripped
-    rm "${TASKS[$CURR]}/"*.out* 2> /dev/null
-    rm "$CWD/"*.exe 2> /dev/null
-    mapfile res < <(cpb test "$watch_file")
-    task_tests="${TESTS[$CURR]##*/}"
-    fail=$(echo -e "${res[@]}" | grep -c ':  W A')
-    success=$(echo -e "${res[@]}" | grep -c ':  A C')
-    echo "succ: $success fail: $fail"
-    clear && FORCE_COLOR=3 cpb test "$watch_file"
-    if [[ $success == "$task_tests" ]]; then
-      TESTS[$CURR]="$success/$task_tests"
-      TIMES[$CURR]=$(($(date '+%s') - start_time))
-      group_success="${TESTS[$CURR_GROUP]%%/*}"
-      group_total="${TESTS[$CURR_GROUP]##*/}"
-      group_success=$((group_success + success))
-      TESTS[$CURR_GROUP]="$group_success/$group_total"
-      break
-    elif [[ $success -gt 0 || $fail -gt 0 ]]; then
-      TESTS[$CURR]="$success/$task_tests"
-    fi
-    print_files
-  done
-  watch_files
 }
 
 function setup_files {
-  EXT="$1"
-  pfx="$2"
-
+  pfx="$1"
   basedir="$BASEDIR/$NVIM_SERVER"
   [[ -d $basedir ]] && rm -r "$basedir"
   mkdir -p "$basedir"
@@ -156,17 +168,24 @@ function setup_files {
       fi
     done
   done
+}
+
+function main {
+  EXT="$1"
+  setup_files "$2"
   load_files
+  clear
+  watch_files
 }
 
 for arg in "$@"; do
   # ruby, rust, c
   case "$arg" in
-    --python | --py) setup_files "py" "#" ;;
-    --bash | --sh) setup_files "sh" "#" ;;
-    --lua) setup_files "lua" "--" ;;
-    --javascript | --js) setup_files "js" "//" ;;
-    --golang | --go) setup_files "go" "//" ;;
+    --python | --py) main "py" "#" ;;
+    --bash | --sh) main "sh" "#" ;;
+    --lua) main "lua" "--" ;;
+    --javascript | --js) main "js" "//" ;;
+    --golang | --go) main "go" "//" ;;
     *)
       echo "Unknown argumment: $arg"
       usage
