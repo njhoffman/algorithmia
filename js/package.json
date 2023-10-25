@@ -35,7 +35,7 @@
     "columnify": "1.5.4",
     "express": "^4.17.2",
     "fast-levenshtein": "^3.0.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "microtime": "^3.0.0",
     "mongodb": "^4.3.1",
     "simples": "^0.8.8",
